@@ -30,6 +30,27 @@ import numpy as np
 sent_length=8
 embedded_docs=pad_sequences(onehot_repr, padding='post',maxlen=sent_length)
 print(embedded_docs)
+dim=10
+
+#build embedding layer
+embedding_layer=Embedding(voc_size,dim,input_length=sent_length)
+embedded_docs=embedding_layer(embedded_docs)
+print(embedded_docs)
+
+#build model
+model=Sequential()
+model.add(embedding_layer)
+model.add(Flatten())
+model.add(Dense(1,activation='sigmoid'))
+model.compile(optimizer='adam',loss='binary_crossentropy',metrics=['accuracy'])
+model.summary()
+
+model.predict(embedded_docs)
+#train model
+model.fit(embedded_docs,labels,epochs=100)
+
+#save model
+model.save('rnn_model.h5')
 
 
 

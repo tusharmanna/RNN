@@ -38,5 +38,20 @@ model=Sequential()
 model.add(Embedding(max_features,128,input_length=max_len))
 model.add(SimpleRNN(128,activation='relu'))
 model.add(Dense(1,activation='sigmoid'))
+model.compile(optimizer='adam',loss='binary_crossentropy',metrics=['accuracy'])
 model.summary()
+
+#import callbacks
+from tensorflow.keras.callbacks import EarlyStopping
+
+#setup early stopping
+early_stopping = EarlyStopping(monitor='val_loss', patience=5,restore_best_weights=True)
+
+#train model
+model.fit(x_train, y_train, epochs=100, batch_size=32, validation_data=(x_test, y_test), callbacks=[early_stopping])
+
+#save model
+model.save('rnn_model.h5')
+
+
 
