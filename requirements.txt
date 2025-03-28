@@ -1,0 +1,11 @@
+tensorflow
+pandas
+numpy
+tensorboard
+matplotlib
+streamlit
+scikit-learn
+scikeras
+word_embedding
+
+
